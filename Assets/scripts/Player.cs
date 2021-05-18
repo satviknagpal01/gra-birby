@@ -4,28 +4,34 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 6f;
-    public float jumpspeed = 9f;
-    float i = 0, c=1, p=10, lambda=7, m;
+    public float jumpspeed;
     Vector2 velocity;
     private new Rigidbody2D rigidbody2D;
+    private SpriteRenderer spriterenderer;
+    private Animator animator;
+    public int score;
+    public int health;
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        spriterenderer = GetComponent<SpriteRenderer>();
+        score = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var h = Input.GetAxis("Horizontal");
-        rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
-        if (Input.GetKey(KeyCode.Space))
+        score += 10;
+        var h = Input.GetAxis("Vertical");
+        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))
         {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpspeed);
-            m = rigidbody2D.gravityScale * 2 + lambda - p;
-            rigidbody2D.gravityScale = (lambda * c + m) % p;
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, h * jumpspeed);
         }
-        
+        if (score % 1000 == 0)
+        {
+            jumpspeed = jumpspeed + 0.1f;
+        }
+
     }
 }
