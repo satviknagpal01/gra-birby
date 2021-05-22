@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
-    public int damage = 10;
     public float speed;
+    private Rigidbody2D rb;
+    private Vector2 screenBounds;
+    private void Start()
+    {
+        rb = this.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(-speed, 0);
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+
+    }
     private void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if(transform.position.x < screenBounds.x * -1.3)
         {
-            other.GetComponent<Player>().health -= damage;
-            Debug.Log(other.GetComponent<Player>().health);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
