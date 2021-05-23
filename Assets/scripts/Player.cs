@@ -13,8 +13,7 @@ public class Player : MonoBehaviour
     public float speed;
     public int score;
     public int health;
-    public bool grounded = false , hurt = false, fly = false;
-    //public GameObject jetpack;
+    private bool grounded = false , hurt = false, fly = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,28 +38,12 @@ public class Player : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ExampleCoroutine());
+            StartCoroutine(jetpack());
         }
-        /*if (score % 10000 == 0)
-        {
-            jumpspeed = jumpspeed + 0.1f;
-        }*/
         if (grounded)
         {
             animator.Play("walk");
         }
-        if (fly)
-        {
-            transform.eulerAngles = new Vector3(0,0,-45);
-        }
-        else
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-    }
-    private void FixedUpdate()
-    {
-        
     }
     void moveCharacter(Vector2 direction)
     {
@@ -79,7 +62,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "ground")
         {
             grounded = false;
-            fly = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -88,14 +70,17 @@ public class Player : MonoBehaviour
         {
             health -= 10;
             animator.Play("hurt");
-            StartCoroutine(ExampleCoroutine());
             Destroy(other.gameObject);
         }
     }
-    IEnumerator ExampleCoroutine()
+    IEnumerator jetpack()
     {
         yield return new WaitForSeconds(.3f);
         transform.GetChild(0).gameObject.SetActive(false);
-        fly = false;
     }
+    IEnumerator hurted()
+    {
+        yield return new WaitForSeconds(.3f);
+    }
+
 }

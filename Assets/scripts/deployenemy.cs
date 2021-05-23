@@ -29,7 +29,7 @@ public class deployenemy : MonoBehaviour
         {
             timeBtwSpawn -= Time.deltaTime;
         }
-        a.transform.position = new Vector2(screenBounds.x * 1.3f, Random.Range(-4f, 6.2f));
+        a.transform.position = new Vector2(screenBounds.x * 1.3f, Random.Range(-4.1f, 5.9f));
         
     }
 

@@ -7,9 +7,12 @@ public class shoot : MonoBehaviour
     public GameObject crosshairs;
     public GameObject player;
     public GameObject bulletPrefab;
-    public float speed = 50.0f;
+    public GameObject bulletStart;
+    public float bulletSpeed = 60.0f;
+
     private Vector3 target;
-    // Start is called before the first frame update
+
+    // Use this for initialization
     void Start()
     {
         Cursor.visible = false;
@@ -23,21 +26,21 @@ public class shoot : MonoBehaviour
 
         Vector3 difference = target - player.transform.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        player.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
+        player.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
         if (Input.GetMouseButtonDown(0))
         {
             float distance = difference.magnitude;
             Vector2 direction = difference / distance;
             direction.Normalize();
-            fireBullet(direction,rotationZ);
+            fireBullet(direction, rotationZ);
         }
     }
-    void fireBullet(Vector2 direction,float rotationZ)
+    void fireBullet(Vector2 direction, float rotationZ)
     {
         GameObject b = Instantiate(bulletPrefab) as GameObject;
-        b.transform.position = player.transform.position;
+        b.transform.position = bulletStart.transform.position;
         b.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
-        b.GetComponent<Rigidbody2D>().velocity = direction * speed;
+        b.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
     }
 }
