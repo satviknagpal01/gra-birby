@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float jumpspeed;
+    public float upspeed;
+    public float downspeed;
     private Vector2 velocity;
     public Vector3 startrotation;
     private new Rigidbody2D rb;
@@ -13,7 +14,6 @@ public class Player : MonoBehaviour
     public float speed;
     public int score;
     public int health;
-    private bool grounded = false , hurt = false, fly = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +27,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score += 100;
+        StartCoroutine(scoreincrease());
         var h = Input.GetAxis("Vertical");
         if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))
         {
-            fly = true;
-            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+            rb.velocity = new Vector2(rb.velocity.x, upspeed);
+            transform.GetChild(0).gameObject.SetActive(true);
+            //transform.Rotate(Vector3.forward, speed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -downspeed);
             transform.GetChild(0).gameObject.SetActive(true);
             //transform.Rotate(Vector3.forward, speed * Time.deltaTime);
         }
@@ -40,37 +45,16 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(jetpack());
         }
-        if (grounded)
-        {
-            animator.Play("walk");
-        }
-    }
-    void moveCharacter(Vector2 direction)
-    {
-        rb.velocity = direction * jumpspeed;
+        Debug.Log(score);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag =="ground")
-        {
-            grounded = true;
-
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "ground")
-        {
-            grounded = false;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("enemy"))
+        if (collision.gameObject.CompareTag("enemy"))
         {
             health -= 10;
-            animator.Play("hurt");
-            Destroy(other.gameObject);
+            score -= 50;
+            StartCoroutine(hurted());
+            Destroy(collision.gameObject);
         }
     }
     IEnumerator jetpack()
@@ -80,7 +64,13 @@ public class Player : MonoBehaviour
     }
     IEnumerator hurted()
     {
+        animator.Play("hurt");
         yield return new WaitForSeconds(.3f);
+        animator.Play("idle");
     }
-
+    IEnumerator scoreincrease()
+    {
+        yield return new WaitForSeconds(5f);
+        score += 10;
+    }
 }
