@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -45,7 +46,11 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(jetpack());
         }
-        Debug.Log(score);
+        if (health <= 0)
+        {
+            StartCoroutine(die());
+            SceneManager.LoadScene("Score");
+        }
     }
     private void LateUpdate()
     {
@@ -96,5 +101,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         score += 2;
         StartCoroutine(scoreincrease());
+    }
+    IEnumerator die()
+    {
+        hurt = true;
+        animator.Play("hurt");
+        yield return new WaitForSeconds(.6f);
+        animator.Play("die");
+        yield return new WaitForSeconds(.4f);
     }
 }
