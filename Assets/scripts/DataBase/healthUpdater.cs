@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class healthUpdater : MonoBehaviour
 {
-    public static float temp = 1;
-    Vector3 localscale;
+    public Slider slider;
+    public static int temp = 100;
     void Start()
     {
         temp = DataBaseDDOL.healthDDOL;
-        localscale = transform.localScale;
+        slider.maxValue = temp;
     }
 
     void Update()
@@ -19,8 +19,7 @@ public class healthUpdater : MonoBehaviour
         {
             temp = Player.health;
             DataBaseDDOL.healthDDOL = temp;
-            localscale.x = DataBaseDDOL.healthDDOL;
-            transform.localScale = localscale;
+            slider.value = DataBaseDDOL.healthDDOL;
         }
     }
 }

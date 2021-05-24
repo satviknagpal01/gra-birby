@@ -6,25 +6,23 @@ public class Player : MonoBehaviour
 {
     public float upspeed;
     public float downspeed;
-    private Vector2 velocity;
-    public Vector3 startrotation;
+    public Vector2 screenBounds;
     private Rigidbody2D rb;
-    private SpriteRenderer spriterenderer;
     private Animator animator;
     public float speed; 
     public static int score = 0;
     public static int coins = 0;
-    public static float health = 1;
+    public static int health = 100;
     private bool hurt = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriterenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         score = 0;
         transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(scoreincrease());
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
 
     // Update is called once per frame
@@ -49,14 +47,28 @@ public class Player : MonoBehaviour
         }
         Debug.Log(score);
     }
+    private void LateUpdate()
+    {
+        Vector3 viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * -1 , screenBounds.x);
+        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1, screenBounds.y );
+        transform.position = viewPos;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            health -= 0.1f;
+            health -= 10;
             score -= 20;
             StartCoroutine(hurted());
             Destroy(collision.gameObject);
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("bounds"))
+        {
+            StartCoroutine(boundhurt());
         }
     }
     IEnumerator jetpack()
@@ -71,6 +83,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         animator.Play("idle");
         hurt = false;
+    }
+    IEnumerator boundhurt()
+    {
+        animator.Play("hurt");
+        yield return new WaitForSeconds(.4f);
+        health--;
+        animator.Play("idle");
     }
     IEnumerator scoreincrease()
     {

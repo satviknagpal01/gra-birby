@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataBaseDDOL : MonoBehaviour
 {
-    public static float healthDDOL = 100;
+    public static int healthDDOL = 100;
     public static int scoreDDOL = 0;
     public static int coinsDDol = 0;
     public static DataBaseDDOL instance;
