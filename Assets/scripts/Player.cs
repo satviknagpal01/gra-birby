@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
     public float downspeed;
     private Vector2 velocity;
     public Vector3 startrotation;
-    private new Rigidbody2D rb;
+    private Rigidbody2D rb;
     private SpriteRenderer spriterenderer;
     private Animator animator;
-    public float speed;
-    public int score;
-    public int health;
+    public float speed; 
+    public static int score = 0;
+    public static int coins = 0;
+    public static float health = 1;
+    private bool hurt = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,22 +24,22 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         score = 0;
         transform.GetChild(0).gameObject.SetActive(false);
+        StartCoroutine(scoreincrease());
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(scoreincrease());
         var h = Input.GetAxis("Vertical");
-        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow))
+        if ((Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow) )&& !(hurt))
         {
             rb.velocity = new Vector2(rb.velocity.x, upspeed);
             transform.GetChild(0).gameObject.SetActive(true);
             //transform.Rotate(Vector3.forward, speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))&& !(hurt))
         {
-            rb.velocity = new Vector2(rb.velocity.x, -downspeed);
+            rb.AddForce(transform.up *-1 *downspeed);
             transform.GetChild(0).gameObject.SetActive(true);
             //transform.Rotate(Vector3.forward, speed * Time.deltaTime);
         }
@@ -51,8 +53,8 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            health -= 10;
-            score -= 50;
+            health -= 0.1f;
+            score -= 20;
             StartCoroutine(hurted());
             Destroy(collision.gameObject);
         }
@@ -64,13 +66,16 @@ public class Player : MonoBehaviour
     }
     IEnumerator hurted()
     {
+        hurt = true;
         animator.Play("hurt");
         yield return new WaitForSeconds(.3f);
         animator.Play("idle");
+        hurt = false;
     }
     IEnumerator scoreincrease()
     {
-        yield return new WaitForSeconds(5f);
-        score += 10;
+        yield return new WaitForSeconds(1f);
+        score += 2;
+        StartCoroutine(scoreincrease());
     }
 }

@@ -7,7 +7,7 @@ public class enemy : MonoBehaviour
     public float speed;
     private Rigidbody2D rb;
     private Vector2 screenBounds;
-    private int health=4;
+    private int health;
     private Player player;
     public GameObject effect;
     private void Start()
@@ -16,12 +16,18 @@ public class enemy : MonoBehaviour
         player = this.GetComponent<Player>();
         rb.velocity = new Vector2(-speed, 0);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-
+        health = Random.Range(3, 8);
     }
     private void Update()
     {
-        if(transform.position.x < screenBounds.x * -1.3 ||health<=0)
+        if(transform.position.x < screenBounds.x * -1.3)
         {
+            Destroy(this.gameObject);
+        }
+        if (health <= 0)
+        {
+
+            Player.score += 50;
             Destroy(this.gameObject);
         }
     }
@@ -29,10 +35,9 @@ public class enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            //change this
+            //change this.
             Instantiate(effect, transform.position, Quaternion.identity);
             health--;
-            player.score += 10;
         }
     }
 }
