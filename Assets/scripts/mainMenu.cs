@@ -8,10 +8,14 @@ public class mainMenu : MonoBehaviour
     public GameObject MainMenu;
     public GameObject Settings;
     public GameObject Something;
-    public SpriteRenderer[] sr = new SpriteRenderer[4];
+    public GameObject Crosshair;
+    public SpriteRenderer sr ;
+    public Sprite[] spr;
+    int i;
     public void PlayGame()
     {
         SceneManager.LoadScene("runner");
+        sr = GetComponent<SpriteRenderer>();
     }
     public void Setting()
     {
@@ -25,6 +29,25 @@ public class mainMenu : MonoBehaviour
     }
     public void One()
     {
-        //
+        i = 0;
+    }
+    public void Two()
+    {
+        i = 1;
+    }
+    public void Three()
+    {
+        i = 2;
+    }
+    public void Four()
+    {
+        i = 3;
+    }
+    public void Apply()
+    {
+        sr.sprite = spr[i]; 
+        MainMenu.SetActive(true);
+        Something.SetActive(true);
+        Settings.SetActive(false);
     }
 }

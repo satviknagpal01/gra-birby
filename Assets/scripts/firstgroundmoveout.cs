@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class moveout : MonoBehaviour
+public class firstgroundmoveout : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,8 +13,6 @@ public class moveout : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        transform.Translate(Vector2.left * 3 * Time.deltaTime);
-        Destroy(this.gameObject, 25f);
+        
     }
 }

@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public Vector2 screenBounds;
     private Rigidbody2D rb;
     private Animator animator;
+    public Camera came;
+    public Animator cam;
     public float speed; 
     public static int score = 0;
     public static int coins = 0;
@@ -18,8 +20,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        cam = camera.GetComponent<Animator>();
         score = 0;
         transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(scoreincrease());
@@ -75,6 +79,12 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(boundhurt());
         }
+        if (other.gameObject.CompareTag("coin"))
+        {
+            coins++;
+            score += 10;
+            Destroy(other.gameObject);
+        }
     }
     IEnumerator jetpack()
     {
@@ -108,6 +118,7 @@ public class Player : MonoBehaviour
         animator.Play("hurt");
         yield return new WaitForSeconds(.6f);
         animator.Play("die");
-        yield return new WaitForSeconds(.4f);
+        cam.Play("shake");
+        yield return new WaitForSeconds(1f);
     }
 }

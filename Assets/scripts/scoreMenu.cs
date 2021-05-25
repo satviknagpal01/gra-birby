@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 public class scoreMenu : MonoBehaviour
 {
     public GameObject ScoreMenu;
+    public void Start()
+    {
+        Cursor.visible = true;
+    }
     public void PlayAgain()
     {
         SceneManager.LoadScene("startmenu");

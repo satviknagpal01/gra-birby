@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 314036907}
   - component: {fileID: 314036906}
   - component: {fileID: 314036905}
+  - component: {fileID: 314036909}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -405,8 +406,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1037251726}
   - {fileID: 1388013244}
+  - {fileID: 1037251726}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -415,6 +416,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &314036909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314036904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bc722b12d00a144b83af36242a40a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScoreMenu: {fileID: 1388013243}
 --- !u!1 &440866227
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +442,7 @@ GameObject:
   - component: {fileID: 440866230}
   - component: {fileID: 440866229}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +510,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 440866230}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314036909}
+        m_MethodName: quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &440866230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,7 +1153,7 @@ RectTransform:
   - {fileID: 751218506}
   - {fileID: 869538387}
   m_Father: {fileID: 314036908}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1391,7 +1416,7 @@ GameObject:
   - component: {fileID: 1388013246}
   - component: {fileID: 1388013245}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: scoremenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1404,14 +1429,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388013243}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1564302603}
   - {fileID: 440866228}
   m_Father: {fileID: 314036908}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1549,7 +1574,7 @@ GameObject:
   - component: {fileID: 1564302605}
   - component: {fileID: 1564302604}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: playagain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1617,7 +1642,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1564302605}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314036909}
+        m_MethodName: PlayAgain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1564302605
 MonoBehaviour:
   m_ObjectHideFlags: 0

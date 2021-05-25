@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class deployenemy : MonoBehaviour
+public class deploycoins : MonoBehaviour
 {
-    public GameObject snowman;
+    public GameObject coin;
     private Vector2 screenBounds;
     private Player player;
     private float timeBtwSpawn;
     public float starttimeBtwSpawn;
     public float decreaseTime;
-    public float minTime = 3.5f;
-    // Start is called before the first frame update
+    public float minTime = 1f;
     void Start()
     {
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-        StartCoroutine(enemycall());
+        StartCoroutine(coincall());
     }
-    private void spawnEnemy()
+    private void spawnCoin()
     {
-        GameObject a = Instantiate(snowman) as GameObject;
+        GameObject a = Instantiate(coin) as GameObject;
         timeBtwSpawn = starttimeBtwSpawn;
         if (starttimeBtwSpawn > minTime)
         {
@@ -29,16 +28,16 @@ public class deployenemy : MonoBehaviour
         {
             timeBtwSpawn -= Time.deltaTime;
         }
-        a.transform.position = new Vector2(screenBounds.x * 1.3f, Random.Range(-4.1f, 5.9f));
+        a.transform.position = new Vector2(screenBounds.x * 1.3f, Random.Range(-4.5f, 4.5f));
     }
 
     // Update is called once per frame
-    IEnumerator enemycall()
+    IEnumerator coincall()
     {
         while (true)
         {
             yield return new WaitForSeconds(timeBtwSpawn);
-            spawnEnemy();
+            spawnCoin();
         }
     }
 }
