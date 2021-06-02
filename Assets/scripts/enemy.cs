@@ -8,12 +8,10 @@ public class enemy : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 screenBounds;
     private int health;
-    private Player player;
     public GameObject effect;
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
-        player = this.GetComponent<Player>();
         rb.velocity = new Vector2(-speed, 0);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         health = Random.Range(4, 8);

@@ -9,7 +9,7 @@ public class healthUpdater : MonoBehaviour
     public static int temp = 100;
     void Start()
     {
-        temp = DataBaseDDOL.healthDDOL;
+        temp = 100;
         slider.maxValue = temp;
     }
 

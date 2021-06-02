@@ -10,24 +10,24 @@ public class Player : MonoBehaviour
     public Vector2 screenBounds;
     private Rigidbody2D rb;
     private Animator animator;
-    public Camera came;
-    public Animator cam;
     public float speed; 
     public static int score = 0;
     public static int coins = 0;
     public static int health = 100;
     private bool hurt = false;
+    private AudioSource audioSource;
+    public AudioClip[] clips;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1f;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        cam = camera.GetComponent<Animator>();
         score = 0;
         transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(scoreincrease());
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(die());
             SceneManager.LoadScene("Score");
+            health = 100;
         }
     }
     private void LateUpdate()
@@ -84,6 +85,8 @@ public class Player : MonoBehaviour
             coins++;
             score += 10;
             Destroy(other.gameObject);
+            audioSource.clip = clips[1];
+            audioSource.Play();
         }
     }
     IEnumerator jetpack()
@@ -95,6 +98,8 @@ public class Player : MonoBehaviour
     {
         hurt = true;
         animator.Play("hurt");
+        audioSource.clip = clips[0];
+        audioSource.Play();
         yield return new WaitForSeconds(.3f);
         animator.Play("idle");
         hurt = false;
@@ -118,7 +123,6 @@ public class Player : MonoBehaviour
         animator.Play("hurt");
         yield return new WaitForSeconds(.6f);
         animator.Play("die");
-        cam.Play("shake");
         yield return new WaitForSeconds(1f);
     }
 }

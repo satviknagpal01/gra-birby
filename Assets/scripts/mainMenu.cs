@@ -7,6 +7,7 @@ public class mainMenu : MonoBehaviour
 {
     public GameObject MainMenu;
     public GameObject Settings;
+    public GameObject loadScreen;
     public GameObject Something;
     public GameObject Crosshair;
     public SpriteRenderer sr ;
@@ -14,7 +15,8 @@ public class mainMenu : MonoBehaviour
     int i;
     public void PlayGame()
     {
-        SceneManager.LoadScene("runner");
+        MainMenu.SetActive(false);
+        loadScreen.SetActive(true);
         sr = GetComponent<SpriteRenderer>();
     }
     public void Setting()

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class firstgroundmoveout : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float Speed;
+    private Vector2 screenBounds;
+    private void Start()
     {
-        
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(Vector2.left * Speed * Time.deltaTime);
+        if (transform.position.x < screenBounds.x * -1.3)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
