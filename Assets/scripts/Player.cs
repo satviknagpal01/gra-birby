@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private bool hurt = false;
     private AudioSource audioSource;
     public AudioClip[] clips;
+    public bool shake = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +56,10 @@ public class Player : MonoBehaviour
             StartCoroutine(die());
             SceneManager.LoadScene("Score");
             health = 100;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(gravity());
         }
     }
     private void LateUpdate()
@@ -97,12 +102,14 @@ public class Player : MonoBehaviour
     IEnumerator hurted()
     {
         hurt = true;
+        shake = true;
         animator.Play("hurt");
         audioSource.clip = clips[0];
         audioSource.Play();
         yield return new WaitForSeconds(.3f);
         animator.Play("idle");
         hurt = false;
+        shake = false;
     }
     IEnumerator boundhurt()
     {
@@ -110,6 +117,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(.4f);
         health--;
         animator.Play("idle");
+    }
+    IEnumerator gravity()
+    {
+        shake = true;
+        yield return new WaitForSeconds(.2f);
+        rb.gravityScale *= -1;
+        shake = false;
     }
     IEnumerator scoreincrease()
     {
@@ -121,7 +135,6 @@ public class Player : MonoBehaviour
     {
         hurt = true;
         animator.Play("hurt");
-        yield return new WaitForSeconds(.6f);
         animator.Play("die");
         yield return new WaitForSeconds(1f);
     }

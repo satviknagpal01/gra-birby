@@ -9,6 +9,7 @@ public class LevelLoader : MonoBehaviour
     public Slider slider;
     public void LoadLevel (int sceneIndex)
     {
+        StartCoroutine(load());
         StartCoroutine(LoadAsyncrously(sceneIndex));
     }
     IEnumerator LoadAsyncrously(int sceneIndex)
@@ -21,5 +22,9 @@ public class LevelLoader : MonoBehaviour
             slider.value = progress;
             yield return null;
         }
+    }
+    IEnumerator load()
+    {
+        yield return new WaitForSeconds(1.4f);
     }
 }

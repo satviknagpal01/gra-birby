@@ -7,6 +7,7 @@ public class DataBaseDDOL : MonoBehaviour
     public static int healthDDOL = 100;
     public static int scoreDDOL = 0;
     public static int coinsDDol = 0;
+    public static int highscoreDDol = 0;
     public static DataBaseDDOL instance;
 
     void Awake()
@@ -27,7 +28,7 @@ public class DataBaseDDOL : MonoBehaviour
     public static void ResetDDOL()
     {
         scoreDDOL = 0;
-        healthDDOL = 3;
+        healthDDOL = 100;
         coinsDDol = 0;
     }
 }

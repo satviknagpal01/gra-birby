@@ -9,12 +9,27 @@ public class enemy : MonoBehaviour
     private Vector2 screenBounds;
     private int health;
     public GameObject effect;
+    private int min ,max;
     private void Start()
     {
+        if(Player.score <= 2000)
+        {
+            min = 3;
+            max = 6;
+        }
+        else if (Player.score <= 6000)
+        {
+            min = 4;
+            max = 7;
+        }
+        else{
+            min = 5;
+            max = 9;
+        }
         rb = this.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(-speed, 0);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-        health = Random.Range(4, 8);
+        health = Random.Range(min, max);
     }
     private void Update()
     {
